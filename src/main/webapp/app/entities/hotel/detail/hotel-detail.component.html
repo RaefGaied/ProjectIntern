@@ -1,0 +1,100 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (hotel()) {
+      <div>
+        <h2 data-cy="hotelDetailsHeading"><span jhiTranslate="projectinternApp.hotel.detail.title">Hotel</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ hotel()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.nom">Nom</span></dt>
+          <dd>
+            <span>{{ hotel()!.nom }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.adresse">Adresse</span></dt>
+          <dd>
+            <span>{{ hotel()!.adresse }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.numeroTelephone">Numero Telephone</span></dt>
+          <dd>
+            <span>{{ hotel()!.numeroTelephone }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.pays">Pays</span></dt>
+          <dd>
+            <span>{{ hotel()!.pays }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.ville">Ville</span></dt>
+          <dd>
+            <span>{{ hotel()!.ville }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.vueS">Vue S</span></dt>
+          <dd>
+            <span>{{ hotel()!.vueS }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.capacite">Capacite</span></dt>
+          <dd>
+            <span>{{ hotel()!.capacite }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.notation">Notation</span></dt>
+          <dd>
+            <span>{{ hotel()!.notation }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.lienUnique">Lien Unique</span></dt>
+          <dd>
+            <span>{{ hotel()!.lienUnique }}</span>
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.uiConfigurations">Ui Configurations</span></dt>
+          <dd>
+            @if (hotel()!.uiConfigurations) {
+              <div>
+                <a [routerLink]="['/ui-configuration', hotel()!.uiConfigurations?.id, 'view']">{{ hotel()!.uiConfigurations?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.emailConfig">Email Config</span></dt>
+          <dd>
+            @if (hotel()!.emailConfig) {
+              <div>
+                <a [routerLink]="['/email-template-configuration', hotel()!.emailConfig?.id, 'view']">{{ hotel()!.emailConfig?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.authConfig">Auth Config</span></dt>
+          <dd>
+            @if (hotel()!.authConfig) {
+              <div>
+                <a [routerLink]="['/authentification-configuration', hotel()!.authConfig?.id, 'view']">{{ hotel()!.authConfig?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="projectinternApp.hotel.hotelAdministrateur">Hotel Administrateur</span></dt>
+          <dd>
+            @if (hotel()!.hotelAdministrateur) {
+              <div>
+                <a [routerLink]="['/hotel-administrateur', hotel()!.hotelAdministrateur?.id, 'view']">{{
+                  hotel()!.hotelAdministrateur?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/hotel', hotel()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

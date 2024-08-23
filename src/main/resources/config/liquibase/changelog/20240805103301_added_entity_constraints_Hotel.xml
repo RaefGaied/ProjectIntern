@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Hotel.
+    -->
+    <changeSet id="20240805103301-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="ui_configurations_id"
+                                 baseTableName="hotel"
+                                 constraintName="fk_hotel__ui_configurations_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ui_configuration"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="email_config_id"
+                                 baseTableName="hotel"
+                                 constraintName="fk_hotel__email_config_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="email_template_configuration"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="auth_config_id"
+                                 baseTableName="hotel"
+                                 constraintName="fk_hotel__auth_config_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="authentification_configuration"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="hotel_administrateur_id"
+                                 baseTableName="hotel"
+                                 constraintName="fk_hotel__hotel_administrateur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hotel_administrateur"
+                                 />
+    </changeSet>
+</databaseChangeLog>

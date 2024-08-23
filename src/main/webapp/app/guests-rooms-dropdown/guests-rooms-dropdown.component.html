@@ -1,0 +1,40 @@
+<div class="dropdown" ngbDropdown >
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="guestsRoomsDropdown" ngbDropdownToggle>
+    {{ adults }} Adults {{ children }} Children {{ rooms }} Room{{ rooms > 1 ? 's' : '' }}
+  </button>
+  <ul class="dropdown-menu p-3" ngbDropdownMenu aria-labelledby="guestsRoomsDropdown">
+    <li class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <span>Adults</span>
+        <small class="text-muted d-block">Ages 18 or above</small>
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-secondary btn-sm" (click)="updateGuests('adults', -1)">-</button>
+        <span class="px-3">{{ adults }}</span>
+        <button class="btn btn-outline-secondary btn-sm" (click)="updateGuests('adults', 1)">+</button>
+      </div>
+    </li>
+    <li class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <span>Children</span>
+        <small class="text-muted d-block">Ages 13 below</small>
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-secondary btn-sm" (click)="updateGuests('children', -1)">-</button>
+        <span class="px-3">{{ children }}</span>
+        <button class="btn btn-outline-secondary btn-sm" (click)="updateGuests('children', 1)">+</button>
+      </div>
+    </li>
+    <li class="d-flex justify-content-between align-items-center">
+      <div>
+        <span>Rooms</span>
+        <small class="text-muted d-block">Max room 8</small>
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-secondary btn-sm" (click)="updateGuests('rooms', -1)">-</button>
+        <span class="px-3">{{ rooms }}</span>
+        <button class="btn btn-outline-secondary btn-sm" (click)="updateGuests('rooms', 1)">+</button>
+      </div>
+    </li>
+  </ul>
+</div>

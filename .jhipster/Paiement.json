@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20240805103309"
+  },
+  "applications": ["projectintern"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "montant",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "datePaiement",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "methodePaiement",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "token",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "transactionId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statutPaiement",
+      "fieldType": "PAIEMENT",
+      "fieldValues": "Reussi,Echoue"
+    }
+  ],
+  "name": "Paiement",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "reservation",
+      "relationshipName": "reservation",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

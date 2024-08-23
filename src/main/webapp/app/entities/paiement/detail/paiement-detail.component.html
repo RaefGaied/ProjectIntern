@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paiement()) {
+      <div>
+        <h2 data-cy="paiementDetailsHeading" >Paiement</h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt>ID</dt>
+          <dd>
+            <span>{{ paiement()!.id }}</span>
+          </dd>
+          <dt>Montant</dt>
+          <dd>
+            <span>{{ paiement()!.montant }}</span>
+          </dd>
+          <dt>Date Paiement</dt>
+          <dd>
+            <span>{{ paiement()!.datePaiement | formatMediumDatetime }}</span>
+          </dd>
+          <dt>Methode Paiement</dt>
+          <dd>
+            <span>{{ paiement()!.methodePaiement }}</span>
+          </dd>
+          <dt>Token</dt>
+          <dd>
+            <span>{{ paiement()!.token }}</span>
+          </dd>
+          <dt>Transaction Id</dt>
+          <dd>
+            <span>{{ paiement()!.transactionId }}</span>
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            <span>{{ paiement()!.description }}</span>
+          </dd>
+          <dt>Statut Paiement</dt>
+          <dd>
+            <span>{{ { null: 'null', Reussi: 'Reussi',"EN_COURS": "EN_COURS", Echoue: 'Echoue' }[paiement()!.statutPaiement ?? 'null'] }}</span>
+          </dd>
+          <dt>Reservation</dt>
+          <dd>
+            @if (paiement()!.reservation) {
+              <div>
+                <a [routerLink]="['/reservation', paiement()!.reservation?.id, 'view']">{{ paiement()!.reservation?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;Back
+        </button>
+
+        <button type="button" [routerLink]="['/paiement', paiement()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;Edit
+        </button>
+      </div>
+    }
+  </div>
+</div>

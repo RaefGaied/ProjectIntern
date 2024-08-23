@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<div class="col-md-9">
+  <div>
+    @if (account() !== null) {
+      <div class="alert alert-success">
+        @if (account()) {
+          <span id="home-logged-message" jhiTranslate="home.logged.message" [translateValues]="{ username: account()!.login }">
+            You are logged in as user &quot;{{ account()!.login }}&quot;.
+          </span>
+        }
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center text-white" style="background-color: #1c1c1e; height: 80vh;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h1 class="display-4 fw-bold">Find the top<br> Hotels nearby.</h1>
+        <p class="lead">We bring you not only a stay option, but an experience in your budget to enjoy the luxury.</p>
+        <div>
+          <a href="#" class="btn btn-primary btn-lg me-3">Discover Now</a>
+          <a href="#" class="btn btn-outline-light btn-lg">Watch our story</a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <img src="https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg" alt="Hotel Image" class="img-fluid rounded">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Search Section -->
+<section class="search-section py-3" style="background-color: wheat;">
+  <div class="container">
+    <form class="row g-0 align-items-center" (ngSubmit)="onSearch()">
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fas fa-map-marker-alt"></i>
+          </span>
+          <input type="text" class="form-control" placeholder="Where are you going ?" required>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <jhi-date-range class="w-100" (dateRangeChange)="onDateRangeChange($event)"></jhi-date-range>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <jhi-guests-rooms-dropdown class="w-100" (guestsRoomsChange)="onGuestsRoomsChange($event)"></jhi-guests-rooms-dropdown>
+        </div>
+      </div>
+      <div class="col-md-1 text-end">
+        <button type="submit" class="btn btn-primary ">Search</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+

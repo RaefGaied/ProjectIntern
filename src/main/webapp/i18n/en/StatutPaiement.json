@@ -1,0 +1,9 @@
+{
+  "projectinternApp": {
+    "StatutPaiement": {
+      "Reussi": "Reussi",
+      "EN_COURS": "EN_COURS",
+      "Echoue": "Echoue"
+    }
+  }
+}

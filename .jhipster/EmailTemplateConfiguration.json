@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "changelogDate": "20240805103303"
+  },
+  "applications": ["projectintern"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nomTemplate",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "corps",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datedeCreation",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "datedeModification",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "activeStatus",
+      "fieldType": "Act",
+      "fieldValues": "AVAILABLE,OFFLINE"
+    }
+  ],
+  "name": "EmailTemplateConfiguration",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
