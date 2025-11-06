@@ -9,13 +9,18 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.jhipster.projectintern.config.ApplicationProperties;
 import org.jhipster.projectintern.config.CRLFLogConverter;
+import org.jhipster.projectintern.domain.User;
+import org.jhipster.projectintern.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
@@ -105,4 +110,22 @@ public class ProjectinternApp {
             env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
         );
     }
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/content/images/**")
+            .addResourceLocations("file:./src/main/webapp/content/images/");
+    }
+   /* @Bean
+    public CommandLineRunner sendTestEmail(MailService mailService) {
+        return args -> {
+            // Créez un utilisateur de test
+            User testUser = new User();
+            testUser.setEmail("example@domain.com"); // Remplacez par l'email de destination
+            testUser.setLangKey("en"); // Langue pour le template d'email
+            testUser.setLogin("testuser"); // Nom d'utilisateur fictif
+
+            // Envoyez l'email de test
+            mailService.sendActivationEmail(testUser);
+            System.out.println("Test email sent!");
+        };
+    }*/
 }

@@ -38,11 +38,11 @@ describe('Service Service', () => {
     });
 
     it('should create a Service', () => {
-      const service = { ...sampleWithNewData };
+      const serviceData = { ...sampleWithNewData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.create(service).subscribe(resp => (expectedResult = resp.body));
+      service.create(serviceData).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'POST' });
       req.flush(returnedFromService);
@@ -50,11 +50,11 @@ describe('Service Service', () => {
     });
 
     it('should update a Service', () => {
-      const service = { ...sampleWithRequiredData };
+      const serviceData = { ...sampleWithRequiredData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.update(service).subscribe(resp => (expectedResult = resp.body));
+      service.update(serviceData).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'PUT' });
       req.flush(returnedFromService);
@@ -98,58 +98,58 @@ describe('Service Service', () => {
 
     describe('addServiceToCollectionIfMissing', () => {
       it('should add a Service to an empty array', () => {
-        const service: IService = sampleWithRequiredData;
-        expectedResult = service.addServiceToCollectionIfMissing([], service);
+        const serviceItem: IService = sampleWithRequiredData;
+        expectedResult = service.addServiceToCollectionIfMissing([], serviceItem); // Call on service instance
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(service);
+        expect(expectedResult).toContain(serviceItem);
       });
 
       it('should not add a Service to an array that contains it', () => {
-        const service: IService = sampleWithRequiredData;
+        const serviceItem: IService = sampleWithRequiredData;
         const serviceCollection: IService[] = [
           {
-            ...service,
+            ...serviceItem,
           },
           sampleWithPartialData,
         ];
-        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, service);
+        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, serviceItem); // Call on service instance
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Service to an array that doesn't contain it", () => {
-        const service: IService = sampleWithRequiredData;
+        const serviceItem: IService = sampleWithRequiredData;
         const serviceCollection: IService[] = [sampleWithPartialData];
-        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, service);
+        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, serviceItem); // Call on service instance
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(service);
+        expect(expectedResult).toContain(serviceItem);
       });
 
       it('should add only unique Service to an array', () => {
         const serviceArray: IService[] = [sampleWithRequiredData, sampleWithPartialData, sampleWithFullData];
         const serviceCollection: IService[] = [sampleWithRequiredData];
-        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, ...serviceArray);
+        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, ...serviceArray); // Call on service instance
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const service: IService = sampleWithRequiredData;
+        const serviceItem: IService = sampleWithRequiredData;
         const service2: IService = sampleWithPartialData;
-        expectedResult = service.addServiceToCollectionIfMissing([], service, service2);
+        expectedResult = service.addServiceToCollectionIfMissing([], serviceItem, service2); // Call on service instance
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(service);
+        expect(expectedResult).toContain(serviceItem);
         expect(expectedResult).toContain(service2);
       });
 
       it('should accept null and undefined values', () => {
-        const service: IService = sampleWithRequiredData;
-        expectedResult = service.addServiceToCollectionIfMissing([], null, service, undefined);
+        const serviceItem: IService = sampleWithRequiredData;
+        expectedResult = service.addServiceToCollectionIfMissing([], null, serviceItem, undefined); // Call on service instance
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(service);
+        expect(expectedResult).toContain(serviceItem);
       });
 
       it('should return initial array if no Service is added', () => {
         const serviceCollection: IService[] = [sampleWithRequiredData];
-        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, undefined, null);
+        expectedResult = service.addServiceToCollectionIfMissing(serviceCollection, undefined, null); // Call on service instance
         expect(expectedResult).toEqual(serviceCollection);
       });
     });

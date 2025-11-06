@@ -9,6 +9,8 @@ class HotelDTOTest {
 
     @Test
     void dtoEqualsVerifier() throws Exception {
+
+
         TestUtil.equalsVerifier(HotelDTO.class);
         HotelDTO hotelDTO1 = new HotelDTO();
         hotelDTO1.setId(1L);

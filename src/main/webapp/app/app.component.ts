@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {AfterViewInit, Component, inject} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import dayjs from 'dayjs/esm';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import locale from '@angular/common/locales/en';
+import { HttpClient } from '@angular/common/http';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
 import { ApplicationConfigService } from 'app/core/config/application-config.service';

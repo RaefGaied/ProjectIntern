@@ -125,4 +125,7 @@ export class ReservationService {
       body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
     });
   }
+  sendConfirmationEmail(reservationId: number): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${this.resourceUrl}/${reservationId}/send-email`, {}, { observe: 'response' });
+  }
 }

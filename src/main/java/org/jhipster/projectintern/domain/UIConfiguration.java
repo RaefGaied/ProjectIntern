@@ -17,6 +17,27 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class UIConfiguration implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Lob
+    private byte[] imageData;  // Field to store the image data
+
+    private String imageType;  // Field to store the image type (e.g., "image/png", "image/jpeg")
+
+    // Getters and setters
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public String getImageType() {
+        return imageType;
+    }
+
+    public void setImageType(String imageType) {
+        this.imageType = imageType;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -43,7 +64,7 @@ public class UIConfiguration implements Serializable {
         value = { "uiConfigurations", "emailConfig", "authConfig", "services", "hotelAdministrateur" },
         allowSetters = true
     )
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "uiConfigurations")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "uiConfigurations")
     private Hotel hotel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

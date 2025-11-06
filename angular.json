@@ -21,7 +21,8 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "customWebpackConfig": {
-              "path": "./webpack/webpack.custom.js"
+              "path": "./webpack/webpack.custom.js",
+              "allowedCommonJsDependencies": ["dayjs"]
             },
             "outputPath": "target/classes/static/",
             "index": "src/main/webapp/index.html",

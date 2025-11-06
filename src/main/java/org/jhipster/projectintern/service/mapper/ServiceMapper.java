@@ -23,6 +23,8 @@ public interface ServiceMapper extends EntityMapper<ServiceDTO, Service> {
     @Named("hotelId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nom", source = "nom")
+    @Mapping(target = "adresse", source = "adresse")
     HotelDTO toDtoHotelId(Hotel hotel);
 
     @Named("partenaireId")

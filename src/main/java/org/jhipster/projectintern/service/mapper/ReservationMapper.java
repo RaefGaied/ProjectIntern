@@ -7,6 +7,10 @@ import org.jhipster.projectintern.service.dto.HotelDTO;
 import org.jhipster.projectintern.service.dto.ReservationDTO;
 import org.jhipster.projectintern.service.dto.UserDTO;
 import org.mapstruct.*;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 /**
  * Mapper for the entity {@link Reservation} and its DTO {@link ReservationDTO}.
@@ -25,5 +29,10 @@ public interface ReservationMapper extends EntityMapper<ReservationDTO, Reservat
     @Named("userId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "email", source = "email")
     UserDTO toDtoUserId(User user);
+
+
 }

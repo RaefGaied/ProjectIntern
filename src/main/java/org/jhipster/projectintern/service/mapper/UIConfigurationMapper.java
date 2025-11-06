@@ -11,8 +11,8 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring",uses = {HotelMapper.class})
 public interface UIConfigurationMapper extends EntityMapper<UIConfigurationDTO, UIConfiguration> {
-    @Mapping(target = "hotel", source = "hotel", qualifiedByName = "hotelId")
-    UIConfigurationDTO toDto(UIConfiguration s);
+    /*@Mapping(target = "hotel", source = "hotel", qualifiedByName = "hotelId")
+    UIConfigurationDTO toDto(UIConfiguration s);*/
     @Named("hotelId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")

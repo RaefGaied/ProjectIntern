@@ -6,6 +6,8 @@ import { HotelComponent } from './list/hotel.component';
 import { HotelDetailComponent } from './detail/hotel-detail.component';
 import { HotelUpdateComponent } from './update/hotel-update.component';
 import HotelResolve from './route/hotel-routing-resolve.service';
+import {HotelViewDetailsComponent} from "./hotel-view-details/hotel-view-details.component";
+
 
 const hotelRoute: Routes = [
   {
@@ -35,6 +37,14 @@ const hotelRoute: Routes = [
   {
     path: ':id/edit',
     component: HotelUpdateComponent,
+    resolve: {
+      hotel: HotelResolve,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/view-details',  // New route for HotelViewDetailsComponent
+    component: HotelViewDetailsComponent,
     resolve: {
       hotel: HotelResolve,
     },

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * A DTO representing a user, with only the public attributes.
  */
-public class UserDTO implements Serializable {
+public class UserDTO extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

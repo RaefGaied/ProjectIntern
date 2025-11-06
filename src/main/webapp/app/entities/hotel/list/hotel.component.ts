@@ -17,6 +17,7 @@ import { EntityArrayResponseType, HotelService } from '../service/hotel.service'
 import { HotelDeleteDialogComponent } from '../delete/hotel-delete-dialog.component';
 import { IHotel } from '../hotel.model';
 
+
 @Component({
   standalone: true,
   selector: 'jhi-hotel',

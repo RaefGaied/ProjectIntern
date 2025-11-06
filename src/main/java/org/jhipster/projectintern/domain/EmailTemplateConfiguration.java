@@ -28,7 +28,7 @@ public class EmailTemplateConfiguration implements Serializable {
     @Column(name = "nom_template")
     private String nomTemplate;
 
-    @Column(name = "corps")
+    @Column(name = "corps" , length = 500)
     private String corps;
 
     @Column(name = "datede_creation")

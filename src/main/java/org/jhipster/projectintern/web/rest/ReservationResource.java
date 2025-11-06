@@ -1,6 +1,9 @@
 package org.jhipster.projectintern.web.rest;
 
+import org.jhipster.projectintern.domain.User;
 import org.jhipster.projectintern.repository.ReservationRepository;
+import org.jhipster.projectintern.repository.UserRepository;
+import org.jhipster.projectintern.service.MailService;
 import org.jhipster.projectintern.service.ReservationService;
 import org.jhipster.projectintern.service.dto.ReservationDTO;
 import org.jhipster.projectintern.web.rest.errors.BadRequestAlertException;
@@ -36,6 +39,7 @@ public class ReservationResource {
     private static final Logger log = LoggerFactory.getLogger(ReservationResource.class);
 
     private static final String ENTITY_NAME = "reservation";
+    private final MailService mailService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -44,9 +48,13 @@ public class ReservationResource {
 
     private final ReservationRepository reservationRepository;
 
-    public ReservationResource(ReservationService reservationService, ReservationRepository reservationRepository) {
+    private final UserRepository userRepository;
+
+    public ReservationResource(MailService mailService, ReservationService reservationService, ReservationRepository reservationRepository, UserRepository userRepository) {
+        this.mailService = mailService;
         this.reservationService = reservationService;
         this.reservationRepository = reservationRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -196,4 +204,61 @@ public class ReservationResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+    @PostMapping("/{id}/send-email")
+    public ResponseEntity<?> sendConfirmationEmail(@PathVariable Long id) {
+        log.debug("REST request to send confirmation email for Reservation : {}", id);
+
+        // Retrieve the reservation using the service
+        Optional<ReservationDTO> reservationDTOOptional = reservationService.findOne(id);
+
+        if (reservationDTOOptional.isEmpty()) {
+            log.error("Reservation with ID {} not found", id);
+            return ResponseEntity.notFound().build();
+        }
+
+        ReservationDTO reservationDTO = reservationDTOOptional.get();
+        log.debug("Retrieved ReservationDTO: {}", reservationDTO);
+
+        // Extract user information
+        Long userId = reservationDTO.getUser().getId();
+        if (userId == null) {
+            log.error("User ID associated with Reservation ID {} is null", id);
+            return ResponseEntity.badRequest().body("User ID is missing");
+        }
+
+        // Fetch the user from the database using the UserRepository
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isEmpty()) {
+            log.error("User with ID {} not found", userId);
+            return ResponseEntity.badRequest().body("User not found");
+        }
+
+        User user = userOptional.get();
+        log.debug("Retrieved User: {}", user);
+        log.debug("User Email: {}", user.getEmail());
+
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+            log.error("User email is null or empty for User ID {}", user.getId());
+            return ResponseEntity.badRequest().body("User email is missing");
+        }
+
+
+        // Send email using the mail service
+        mailService.sendReservationEmail(
+            user,
+            reservationDTO.getHotel().getNom(),
+            reservationDTO.getRoomType(),
+            reservationDTO.getDateDebut().toString(),
+            reservationDTO.getDateFin().toString(),
+            reservationDTO.getTotalPrix().toString()
+        );
+
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+
+
 }

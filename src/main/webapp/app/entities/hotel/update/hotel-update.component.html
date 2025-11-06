@@ -73,7 +73,15 @@
             id="field_lienUnique"
             data-cy="lienUnique"
             formControlName="lienUnique"
+            [value]="uniqueLink"
           />
+          <dd>
+            <span *ngIf="uniqueLink">{{ uniqueLink }}</span>
+            <span *ngIf="!uniqueLink">No unique link generated yet.</span>
+          </dd>
+          <button type="button" class="btn btn-primary" (click)="generateUniqueLink()">
+            Generate Unique Link
+          </button>
         </div>
 
         <div class="mb-3">

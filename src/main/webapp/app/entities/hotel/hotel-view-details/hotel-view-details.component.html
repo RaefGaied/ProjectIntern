@@ -1,0 +1,106 @@
+<div class="container hotel-details">
+  <!-- Hotel Name and Location -->
+  <header class="hotel-header">
+    <h1>{{ hotel?.nom }}</h1>
+    <p>{{ hotel?.adresse }}, {{ hotel?.ville }}, {{ hotel?.pays }}</p>
+    <a href="https://www.google.com/maps" class="location-link" target="_blank">Good location - Show map</a>
+    <p class="card-text mb-1 text-secondary"><strong>Rating:</strong> {{ hotel?.notation }} <i class="fas fa-star text-warning"></i></p>
+  </header>
+
+  <!-- Image Gallery -->
+  <section class="image-gallery">
+    <div class="gallery-grid">
+      <div class="gallery-item-container">
+        <img [src]="'/content/images/' + hotel?.uiConfigurations?.logo" alt="Hotel Logo" class="gallery-item">
+      </div>
+      <div class="gallery-item-container banner-container">
+        <img [src]="'/content/images/' + hotel?.uiConfigurations?.banner" alt="Hotel Banner" class="gallery-item banner">
+        <a href="#" class="view-more">+26 more photos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Features and Amenities -->
+  <section class="amenities mb-3">
+    <h3>Amenities</h3>
+    <div class="icon-grid">
+      <i class='fas fa-coffee' title="Cafe"></i>
+      <i class='fas fa-wifi' title="WiFi"></i>
+      <i class='fas fa-swimming-pool' title="Swimming Pool"></i>
+      <i class='fas fa-umbrella-beach' title="Beach"></i>
+      <i class='fas fa-utensils' title="Restaurant"></i>
+      <i class='fas fa-tv' title="TV"></i>
+      <i class='fas fa-spa' title="Spa"></i>
+      <i class='fas fa-shower' title="Shower"></i>
+    </div>
+  </section>
+
+  <!-- Hotel Rating and Description -->
+  <section class="description mb-3">
+
+  </section>
+
+  <!-- Associated Services -->
+  <section class="hotel-services mb-4">
+    <h3>Associated Services</h3>
+    <ul class="list-unstyled services-list">
+      <li *ngFor="let service of services">
+        <i class="fas fa-check-circle text-success"></i> {{ service.nom }}
+      </li>
+    </ul>
+  </section>
+
+  <!-- Room Availability Table -->
+  <h4 class="mt-4">Room Availability</h4>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+    <tr>
+      <th>Room type</th>
+      <th>Price (TND)</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let room of rooms">
+      <td>{{ room.type }}</td>
+      <td>{{ room.price }}</td>
+      <td>{{ room.description }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm" (click)="showReservationForm()">Reserve</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Reservation Form -->
+  <section class="reservation-form" *ngIf="showReservation">
+    <h2>Make a Reservation</h2>
+    <form [formGroup]="reservationForm" (ngSubmit)="reserveRoom()">
+      <div class="form-group">
+        <label for="roomType">Room Type</label>
+        <select id="roomType" formControlName="roomType" class="form-control">
+          <option *ngFor="let room of rooms" [value]="room.type">{{ room.type }} - {{ room.price }} TND</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="numberOfGuests">Number of Guests</label>
+        <input type="number" id="numberOfGuests" formControlName="numberOfGuests" class="form-control" min="1" />
+      </div>
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" formControlName="startDate" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" formControlName="endDate" class="form-control" />
+      </div>
+      <hr />
+      <button type="submit" class="btn btn-success" [disabled]="reservationForm.invalid">Reserve</button>
+    </form>
+    <!-- Success message block -->
+    <div *ngIf="reservationSuccess" class="alert alert-success mt-3">
+      Reservation successfully completed! You can check your email for the details.
+    </div>
+  </section>
+</div>

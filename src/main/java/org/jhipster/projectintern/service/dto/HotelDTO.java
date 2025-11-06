@@ -152,24 +152,18 @@ public class HotelDTO implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof HotelDTO)) {
+            return false;
+        }
 
         HotelDTO hotelDTO = (HotelDTO) o;
-
-        if (id != null && hotelDTO.id != null && !id.equals(hotelDTO.id)) return false;
-
-        // Compare other fields if necessary
-        return Objects.equals(nom, hotelDTO.nom) &&
-            Objects.equals(adresse, hotelDTO.adresse) &&
-            Objects.equals(numeroTelephone, hotelDTO.numeroTelephone) &&
-            Objects.equals(pays, hotelDTO.pays) &&
-            Objects.equals(ville, hotelDTO.ville) &&
-            Objects.equals(vueS, hotelDTO.vueS) &&
-            Objects.equals(capacite, hotelDTO.capacite) &&
-            Objects.equals(notation, hotelDTO.notation) &&
-            Objects.equals(lienUnique, hotelDTO.lienUnique) &&
-            Objects.equals(hotelAdministrateur, hotelDTO.hotelAdministrateur);
+        if (this.id == null) {
+            return false;
+        }
+        return Objects.equals(this.id, hotelDTO.id);
     }
 
     @Override
@@ -205,4 +199,15 @@ public class HotelDTO implements Serializable {
         this.hotelAdministrateurNom=hotelAdministrateurNom;
 
     }
+
 }
+/*return Objects.equals(nom, hotelDTO.nom) &&
+    Objects.equals(adresse, hotelDTO.adresse) &&
+    Objects.equals(numeroTelephone, hotelDTO.numeroTelephone) &&
+    Objects.equals(pays, hotelDTO.pays) &&
+    Objects.equals(ville, hotelDTO.ville) &&
+    Objects.equals(vueS, hotelDTO.vueS) &&
+    Objects.equals(capacite, hotelDTO.capacite) &&
+    Objects.equals(notation, hotelDTO.notation) &&
+    Objects.equals(lienUnique, hotelDTO.lienUnique) &&
+    Objects.equals(hotelAdministrateur, hotelDTO.hotelAdministrateur);*/

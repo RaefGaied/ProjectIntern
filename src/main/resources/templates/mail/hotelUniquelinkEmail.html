@@ -1,0 +1,23 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
+<head>
+  <title th:text="#{email.hotel.uniqueLink.title}">Hotel Unique Link</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="#{email.hotel.uniqueLink.greeting(${user.login})}">Dear</p>
+
+<p th:text="#{email.hotel.uniqueLink.text1}">You have been provided a unique link to share with users for accessing and booking services at your configured hotel properties:</p>
+
+<p>
+  <!-- Unique Link for Hotel Access -->
+  <a th:href="${lienUnique}" th:text="${lienUnique}">Access your hotel booking platform here</a>
+</p>
+
+<p>
+  <span th:text="#{email.hotel.uniqueLink.text2}">Regards, </span>
+  <br/>
+  <em th:text="#{email.signature}">Projectintern Team.</em>
+</p>
+</body>
+</html>

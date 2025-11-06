@@ -11,8 +11,8 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface EmailTemplateConfigurationMapper extends EntityMapper<EmailTemplateConfigurationDTO, EmailTemplateConfiguration> {
-    @Mapping(target = "hotel", source = "hotel", qualifiedByName = "hotelId")
-    EmailTemplateConfigurationDTO toDto(EmailTemplateConfiguration s);
+   /* @Mapping(target = "hotel", source = "hotel", qualifiedByName = "hotelId")
+    EmailTemplateConfigurationDTO toDto(EmailTemplateConfiguration s);*/
 
     @Named("hotelId")
     @BeanMapping(ignoreByDefault = true)

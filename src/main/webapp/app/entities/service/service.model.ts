@@ -10,9 +10,10 @@ export interface IService {
   disponibilite?: string | null;
   capacite?: number | null;
   typeService?: string | null;
-  hotel?: Pick<IHotel, 'id'> | null;
+  hotel?: IHotel | null;
   partenaire?: Pick<IPartenaire, 'id'> | null;
   reservation?: Pick<IReservation, 'id'> | null;
+
 }
 
 export type NewService = Omit<IService, 'id'> & { id: null };

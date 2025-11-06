@@ -37,4 +37,6 @@ export class AuthServerProvider {
   private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
     this.stateStorageService.storeAuthenticationToken(response.id_token, rememberMe);
   }
+
+  
 }

@@ -37,7 +37,7 @@ import java.util.Optional;
  * REST controller for managing {@link org.jhipster.projectintern.domain.EmailTemplateConfiguration}.
  */
 @RestController
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_HOTEL_ADMIN')")
 @RequestMapping("/api/email-template-configurations")
 public class EmailTemplateConfigurationResource {
 

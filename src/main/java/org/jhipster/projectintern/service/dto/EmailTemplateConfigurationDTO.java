@@ -24,7 +24,7 @@ public class EmailTemplateConfigurationDTO implements Serializable {
 
     private Act activeStatus;
 
-    private HotelDTO hotel;
+
 
     public Long getId() {
         return id;
@@ -74,13 +74,13 @@ public class EmailTemplateConfigurationDTO implements Serializable {
         this.activeStatus = activeStatus;
     }
 
-    public HotelDTO getHotel() {
+    /*public HotelDTO getHotel() {
         return hotel;
     }
 
     public void setHotel(HotelDTO hotel) {
         this.hotel = hotel;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

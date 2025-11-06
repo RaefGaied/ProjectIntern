@@ -7,6 +7,7 @@ import { errorRoute } from './layouts/error/error.route';
 import HomeComponent from './home/home.component';
 import NavbarComponent from './layouts/navbar/navbar.component';
 import LoginComponent from './login/login.component';
+import { HotelViewDetailsComponent } from './entities/hotel/hotel-view-details/hotel-view-details.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,14 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.routes'),
   },
   {
+    path: 'admin',
+    data: {
+      authorities: [Authority.HotelADMIN],
+    },
+    canActivate: [UserRouteAccessService],
+    loadChildren: () => import('./entities/entity.routes'),
+  },
+  {
     path: 'account',
     loadChildren: () => import('./account/account.route'),
   },
@@ -40,6 +49,8 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
   },
+  { path: 'hotel/:id/view-details', component: HotelViewDetailsComponent },
+  // other routes
   ...errorRoute,
 ];
 

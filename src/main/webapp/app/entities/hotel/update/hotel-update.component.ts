@@ -1,9 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import {Component, inject, Input, OnInit} from '@angular/core';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -18,6 +17,7 @@ import { HotelAdministrateurService } from 'app/entities/hotel-administrateur/se
 import { HotelService } from '../service/hotel.service';
 import { IHotel } from '../hotel.model';
 import { HotelFormService, HotelFormGroup } from './hotel-form.service';
+import {StateStorageService} from "../../../core/auth/state-storage.service";
 
 @Component({
   standalone: true,
@@ -41,6 +41,16 @@ export class HotelUpdateComponent implements OnInit {
   protected authentificationConfigurationService = inject(AuthentificationConfigurationService);
   protected hotelAdministrateurService = inject(HotelAdministrateurService);
   protected activatedRoute = inject(ActivatedRoute);
+  protected http = inject(HttpClient);
+  protected uniqueLink: string | null = null;
+
+  constructor( http: HttpClient) {
+
+  }
+
+  // Inject StateStorageService
+  private stateStorageService = inject(StateStorageService);
+  private router = inject(Router);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: HotelFormGroup = this.hotelFormService.createHotelFormGroup();
@@ -105,6 +115,7 @@ export class HotelUpdateComponent implements OnInit {
     this.hotel = hotel;
     this.hotelFormService.resetForm(this.editForm, hotel);
 
+    // @ts-ignore
     this.uiConfigurationsCollection = this.uIConfigurationService.addUIConfigurationToCollectionIfMissing<IUIConfiguration>(
       this.uiConfigurationsCollection,
       hotel.uiConfigurations,
@@ -127,6 +138,7 @@ export class HotelUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+
     this.uIConfigurationService
       .query({ filter: 'hotel-is-null' })
       .pipe(map((res: HttpResponse<IUIConfiguration[]>) => res.body ?? []))
@@ -183,4 +195,37 @@ export class HotelUpdateComponent implements OnInit {
       )
       .subscribe((hotelAdministrateurs: IHotelAdministrateur[]) => (this.hotelAdministrateursSharedCollection = hotelAdministrateurs));
   }
+
+  generateUniqueLink() {
+    const hotelId = this.editForm.get('id')?.value;
+    const authToken = this.stateStorageService.getAuthenticationToken();
+
+    console.log('Hotel ID:', hotelId);
+    console.log('Auth Token:', authToken);
+
+    if (!hotelId) {
+      console.warn('Hotel ID is not available.');
+      return;
+    }
+
+    if (!authToken) {
+      console.warn('Authentication token is missing.');
+      return;
+    }
+
+    const headers = { Authorization: `Bearer ${authToken}` };
+
+    this.http.get(`http://localhost:8080/api/hotels/hotel/${hotelId}`, { headers, responseType: 'text' })
+      .subscribe({
+        next: (link: string) => {
+          console.log('Received link:', link);
+          this.uniqueLink = link;
+          this.editForm.get('lienUnique')?.setValue(link);
+        },
+
+      });
+  }
+
+
+
 }

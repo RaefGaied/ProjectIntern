@@ -22,7 +22,7 @@ public class UIConfigurationDTO implements Serializable {
 
     private ZonedDateTime dateModify;
 
-    private HotelDTO hotel;
+    //private HotelDTO hotel;
 
     public Long getId() {
         return id;
@@ -72,13 +72,13 @@ public class UIConfigurationDTO implements Serializable {
         this.dateModify = dateModify;
     }
 
-    public HotelDTO getHotel() {
+   /* public HotelDTO getHotel() {
         return hotel;
     }
 
     public void setHotel(HotelDTO hotel) {
         this.hotel = hotel;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -111,7 +111,6 @@ public class UIConfigurationDTO implements Serializable {
             ", banner='" + getBanner() + "'" +
             ", dateCreation='" + getDateCreation() + "'" +
             ", dateModify='" + getDateModify() + "'" +
-            ", hotel=" + getHotel() +
             "}";
     }
 }

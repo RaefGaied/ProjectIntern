@@ -168,8 +168,17 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public Optional<ReservationDTO> findOne(Long id) {
         log.debug("Request to get Reservation : {}", id);
-        return reservationRepository.findById(id).map(reservationMapper::toDto);
+        Optional<Reservation> reservationOptional = reservationRepository.findById(id);
+
+        reservationOptional.ifPresent(reservation -> {
+            log.debug("Fetched Reservation: {}", reservation);
+            log.debug("User associated with Reservation: {}", reservation.getUser());
+        });
+
+        return reservationOptional.map(reservationMapper::toDto);
     }
+
+
 
     /**
      * Delete the reservation by id.

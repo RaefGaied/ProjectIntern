@@ -212,4 +212,5 @@ public class PaiementResource {
         return ResponseEntity.ok().body(paymentIntent);
     }
 
+
 }

@@ -49,13 +49,23 @@
           </dd>
           <dt><span jhiTranslate="projectinternApp.hotel.lienUnique">Lien Unique</span></dt>
           <dd>
-            <span>{{ hotel()!.lienUnique }}</span>
+          <span>{{hotel()?.lienUnique}}</span>
+          <!--<dd>
+            <span *ngIf="uniqueLink">{{ uniqueLink }}</span>
+            <span *ngIf="!uniqueLink">No unique link generated yet.</span>
           </dd>
+        </dl>-->
+          </dd>
+
+        <!-- Button to generate unique link -->
+
+
+
           <dt><span jhiTranslate="projectinternApp.hotel.uiConfigurations">Ui Configurations</span></dt>
           <dd>
             @if (hotel()!.uiConfigurations) {
               <div>
-                <a [routerLink]="['/ui-configuration', hotel()!.uiConfigurations?.id, 'view']">{{ hotel()!.uiConfigurations?.id }}</a>
+                <a [routerLink]="['/ui-configuration', hotel()!.uiConfigurations?.logo, 'view']">{{ hotel()!.uiConfigurations?.toLocaleString() }}</a>
               </div>
             }
           </dd>
@@ -85,7 +95,7 @@
               </div>
             }
           </dd>
-        </dl>
+
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
@@ -94,7 +104,13 @@
         <button type="button" [routerLink]="['/hotel', hotel()!.id, 'edit']" class="btn btn-primary">
           <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
         </button>
+        </dl>
+
       </div>
+
+
+
     }
+
   </div>
 </div>

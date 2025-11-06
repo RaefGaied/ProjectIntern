@@ -78,9 +78,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+
+        <dependency>
             <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
             <version>${jhipster-framework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -111,10 +123,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
@@ -299,6 +308,7 @@
             <artifactId>stripe-java</artifactId>
             <version>26.7.0</version>
         </dependency>
+
 
 
     </dependencies>
@@ -506,19 +516,27 @@
                         <dependency>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-starter-web</artifactId>
-                            <version>{spring-boot.version}</version>
+                            <version>3.3.1</version>
                         </dependency>
+                        <dependency>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-starter-mail</artifactId>
+                            <version>3.3.1</version>
+                        </dependency>
+
 
                         <dependency>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-starter-tomcat</artifactId>
-                            <version>{spring-boot.version}</version>
+                            <version>3.3.1</version>
+
                         </dependency>
 
                         <dependency>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-starter-undertow</artifactId>
-                            <version>{spring-boot.version}</version>
+                            <version>3.3.1</version>
+
                             <!--<scope>provided</scope>-->
                         </dependency>
 
@@ -543,6 +561,7 @@
                     <version>${maven-clean-plugin.version}</version>
                 </plugin>
                 <plugin>
+
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>

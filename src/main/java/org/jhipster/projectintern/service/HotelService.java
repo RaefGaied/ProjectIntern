@@ -8,10 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link org.jhipster.projectintern.domain.Hotel}.
@@ -193,10 +196,12 @@ public class HotelService {
 
         return uniqueLink;
     }
+
     public Optional<Hotel> findHotelByName(String name) {
         // Implementation of finding a hotel by name
         return hotelRepository.findByNom(name);
     }
+
     /*public ResponseEntity<?> associateHotelToAdmin(Long hotelId, Long adminId) {
         try {
             // Fetch the hotel and admin from the repositories
@@ -223,6 +228,50 @@ public class HotelService {
             return new ResponseEntity<>("Error associating hotel with admin: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }*/
+    public List<HotelDTO> searchHotels(String location, String checkInDate, String checkOutDate, int adults, int children, int rooms) {
+        int totalGuests = adults + children; // Total guests calculation
+
+        // Call repository method to search for hotels
+        return hotelRepository.searchHotels(location, totalGuests)
+            .stream()
+            .map(hotelMapper::toDto) // Use mapper for conversion
+            .collect(Collectors.toList());
+
+   /* public byte[] findImageById(Long id) {
+        // Fetch the image bytes from the repository, you need to replace this with actual repository code
+        Optional<UIConfiguration> uiConfigOpt = uiConfigurationRepository.findById(id);
+        return uiConfigOpt.map(UIConfiguration::getImageData).orElse(null);  // Assuming getImageData() returns byte[]
+    }*/
+  /* public byte[] findImageById(Long id) {
+       // Fetch the image bytes from the repository, assuming the image is stored in UIConfiguration or Hotel entity
+       Optional<UIConfiguration> uiConfigOpt = uiConfigurationRepository.findById(id);
+
+       if (uiConfigOpt.isPresent() && uiConfigOpt.get().getImageData() != null) {
+           return uiConfigOpt.get().getImageData();  // Assuming `getImageData()` returns byte[]
+       }
+
+       // If no image found, return null
+       return null;*/
 
 
+    /*private String determineImageType(byte[] imageData) {
+        if (imageData == null || imageData.length < 4) {
+            return MediaType.APPLICATION_OCTET_STREAM_VALUE; // Default to binary if the type is unknown
+        }
+
+        // Simple signature checks for common image types
+        if (imageData[0] == (byte) 0xFF && imageData[1] == (byte) 0xD8) {
+            return MediaType.IMAGE_JPEG_VALUE;
+        } else if (imageData[0] == (byte) 0x89 && imageData[1] == (byte) 0x50) {
+            return MediaType.IMAGE_PNG_VALUE;
+        } else if (imageData[0] == (byte) 0x47 && imageData[1] == (byte) 0x49) {
+            return MediaType.IMAGE_GIF_VALUE;
+        }
+        // Add more types if needed
+
+        return MediaType.APPLICATION_OCTET_STREAM_VALUE; // Default if type is unknown
+    }*/
+
+
+    }
 }

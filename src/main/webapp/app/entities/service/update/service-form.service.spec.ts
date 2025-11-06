@@ -9,13 +9,13 @@ describe('Service Form Service', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ServiceFormService);
+    service = TestBed.inject(ServiceFormService); // Inject service here
   });
 
   describe('Service methods', () => {
     describe('createServiceFormGroup', () => {
       it('should create a new form with FormControl', () => {
-        const formGroup = service.createServiceFormGroup();
+        const formGroup = service.createServiceFormGroup(); // Use injected service
 
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
@@ -57,25 +57,25 @@ describe('Service Form Service', () => {
       it('should return NewService for default Service initial value', () => {
         const formGroup = service.createServiceFormGroup(sampleWithNewData);
 
-        const service = service.getService(formGroup) as any;
+        const resultService = service.getService(formGroup) as any; // Renamed variable
 
-        expect(service).toMatchObject(sampleWithNewData);
+        expect(resultService).toMatchObject(sampleWithNewData);
       });
 
       it('should return NewService for empty Service initial value', () => {
         const formGroup = service.createServiceFormGroup();
 
-        const service = service.getService(formGroup) as any;
+        const resultService = service.getService(formGroup) as any; // Renamed variable
 
-        expect(service).toMatchObject({});
+        expect(resultService).toMatchObject({});
       });
 
       it('should return IService', () => {
         const formGroup = service.createServiceFormGroup(sampleWithRequiredData);
 
-        const service = service.getService(formGroup) as any;
+        const resultService = service.getService(formGroup) as any; // Renamed variable
 
-        expect(service).toMatchObject(sampleWithRequiredData);
+        expect(resultService).toMatchObject(sampleWithRequiredData);
       });
     });
 

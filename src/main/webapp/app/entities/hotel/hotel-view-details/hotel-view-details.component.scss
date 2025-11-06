@@ -1,0 +1,321 @@
+/* Body Background - Gradient with Pattern */
+body {
+  background: linear-gradient(135deg, #f0f4f8 25%, #e0e7ff 100%); /* Soft blue gradient */
+  background-attachment: fixed; /* Background stays in place on scroll */
+  font-family: 'Roboto', sans-serif;
+  color: #333333;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Pattern Overlay (optional) */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://www.transparenttextures.com/patterns/pinstripe.png'); /* Subtle pinstripe pattern */
+  opacity: 0.1; /* Very light opacity for a soft effect */
+  z-index: -1;
+}
+
+/* General Styles for the Container */
+.hotel-details {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff; /* Maintain white background for the content */
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Slightly larger shadow for emphasis */
+  position: relative;
+  z-index: 1;
+}
+
+/* Header Styles */
+.hotel-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.hotel-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #0056b3; /* Updated color for better contrast */
+}
+
+.hotel-header p {
+  font-size: 18px;
+  color: #666666;
+  margin-top: 10px;
+}
+
+/* Hotel Services Header */
+.hotel-services h3 {
+  font-size: 28px;
+  color: #0056b3; /* Updated color for consistency */
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e0e7ff; /* Lighter underline */
+}
+
+/* Location Link */
+.location-link {
+  color: #009688;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.location-link:hover {
+  color: #0056b3;
+}
+
+/* Image Gallery */
+.image-gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Container for each gallery item */
+.gallery-item-container {
+  position: relative;
+}
+
+/* Hide the link initially */
+.view-more {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Show the link only when hovering over the banner container */
+.banner-container:hover .view-more {
+  opacity: 1;
+}
+
+/* Style for all gallery items */
+.gallery-item {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the view-more link */
+.view-more {
+  color: #007bff;
+  text-decoration: none;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+
+/* Room Table */
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f8f8f8;
+  font-weight: 700;
+}
+
+.amenities .badge:hover {
+  background-color: #f0f0f0;
+}
+
+/* Description */
+.description {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #444;
+}
+
+/* Reviews */
+.reviews {
+  padding: 25px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.review-score h2 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #ffcc00;
+  margin-bottom: 5px;
+}
+
+.review-snippet {
+  font-size: 17px;
+  color: #666666;
+  max-width: 500px;
+}
+
+.review-snippet p:first-child {
+  font-style: italic;
+}
+
+/* Hotel Services */
+.hotel-services {
+  margin-top: 30px;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+}
+
+.hotel-services h3 {
+  font-size: 28px;
+  color: #0056b3; /* Consistent color with header */
+  margin-bottom: 20px;
+}
+
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.services-list li {
+  background-color: #f9f9f9;
+  margin-bottom: 12px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-size: 16px;
+  color: #555555;
+  transition: background-color 0.3s ease;
+}
+
+.services-list li:hover {
+  background-color: #e0e4e8;
+}
+
+/* Map */
+.otel-map {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.show-map {
+  color: #009688;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.show-map:hover {
+  color: #0056b3;
+}
+
+/* Reservation Button */
+.reservation {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.reserve-button {
+  background-color: #0056b3;
+  color: #fff;
+  padding: 15px 35px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reserve-button:hover {
+  background-color: #004494;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.reservation-form {
+  background-color: #ffffff;
+  padding: 25px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+  background-color: #009688;
+  border-color: #009688;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 25px;
+}
+
+.btn-primary:hover {
+  background-color: #00796b;
+  border-color: #00796b;
+}
+
+.alert-success {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #e0ffe0;
+  border-left: 5px solid #009688;
+  color: #004d40;
+}
+//* Amenities */
+.amenities {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* Spacing between icons */
+}
+
+.icon-grid i {
+  font-size: 32px; /* Icon size */
+  color: #00796b;
+  transition: color 0.3s ease;
+  margin-bottom: 10px; /* Adds space below the icon */
+}
+
+.icon-grid i:hover {
+  color: #004d40;
+}
+
+

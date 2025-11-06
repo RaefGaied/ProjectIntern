@@ -1,11 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IHotel, NewHotel } from '../hotel.model';
+import {map} from "rxjs/operators";
+
 
 export type PartialUpdateHotel = Partial<IHotel> & Pick<IHotel, 'id'>;
 
@@ -16,8 +18,19 @@ export type EntityArrayResponseType = HttpResponse<IHotel[]>;
 export class HotelService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
-
+  uniqueLink: string | null = null;
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/hotels');
+  private selectedHotelSource = new BehaviorSubject<NewHotel | null>(null);
+  selectedHotel$ = this.selectedHotelSource.asObservable();
+
+
+
+
+  // Method to generate and get a unique link for a hotel
+ /* generateUniqueLink(hotelId: number): Observable<string> {
+    return this.http.get<string>(`${this.apiUrl}/hotels/${hotelId}/generate-link`);
+  }*/
+
 
   create(hotel: NewHotel): Observable<EntityResponseType> {
     return this.http.post<IHotel>(this.resourceUrl, hotel, { observe: 'response' });
@@ -71,4 +84,10 @@ export class HotelService {
     }
     return hotelCollection;
   }
+  findWithServices(id: number): Observable<IHotel> {
+    return this.http.get<IHotel>(`${this.resourceUrl}/${id}/with-services`).pipe(
+      map(response => response as IHotel)
+    );
+  }
+
 }

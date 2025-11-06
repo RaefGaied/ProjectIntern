@@ -60,12 +60,9 @@ public class AuthentificationConfigurationService {
                 throw new IllegalArgumentException(" AuthentificationConfiguration LoginPageCustomization  cannot be empty");
             }
 
-            Hotel hotel = hotelRepository.findById(authentificationConfigurationDTO.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Hotel does not exist"));
+
 
             AuthentificationConfiguration authentificationConfiguration = authentificationConfigurationMapper.toEntity(authentificationConfigurationDTO);
-            authentificationConfiguration.setHotel(hotel); // Associate with hotel
-
             authentificationConfiguration = authentificationConfigurationRepository.save(authentificationConfiguration);
             return authentificationConfigurationMapper.toDto(authentificationConfiguration);
 

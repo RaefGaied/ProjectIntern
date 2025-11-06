@@ -54,26 +54,26 @@ public class Hotel implements Serializable {
     private String lienUnique;
 
     @JsonIgnoreProperties(value = { "hotel" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private UIConfiguration uiConfigurations;
 
     @JsonIgnoreProperties(value = { "hotel" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private EmailTemplateConfiguration emailConfig;
 
     @JsonIgnoreProperties(value = { "hotel" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private AuthentificationConfiguration authConfig;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hotel")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "hotel", "partenaire", "reservation" }, allowSetters = true)
     private Set<Service> services = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "hotels" }, allowSetters = true)
     private HotelAdministrateur hotelAdministrateur;
 

@@ -10,3 +10,4 @@ export interface IUIConfiguration {
 }
 
 export type NewUIConfiguration = Omit<IUIConfiguration, 'id'> & { id: null };
+

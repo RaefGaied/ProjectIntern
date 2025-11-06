@@ -44,7 +44,7 @@ public class Reservation implements Serializable {
     @Column(name = "statut_paiement")
     private Statut statutPaiement;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "reservation")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "hotel", "partenaire", "reservation" }, allowSetters = true)
     private Set<Service> services = new HashSet<>();
@@ -56,7 +56,7 @@ public class Reservation implements Serializable {
     )
     private Hotel hotel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @JsonIgnoreProperties(value = { "reservation" }, allowSetters = true)

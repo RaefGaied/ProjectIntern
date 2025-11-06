@@ -89,11 +89,14 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/api/hotel-administrateurs/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
 
-                    .requestMatchers(mvc.pattern("/api/hotels/**")).hasAuthority(AuthoritiesConstants.ADMIN)
-                    .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
+
 
                     .requestMatchers(mvc.pattern("/api/paiements/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
+
+
+                    .requestMatchers(mvc.pattern("/api/hotels/**")).hasAuthority(AuthoritiesConstants.HotelADMIN)
+                    .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.HotelADMIN)
 
                     .requestMatchers(mvc.pattern("/api/partenaires/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)

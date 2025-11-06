@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div>
   <h2 id="page-heading" data-cy="UIConfigurationHeading">
     <span jhiTranslate="projectinternApp.uIConfiguration.home.title">UI Configurations</span>
@@ -32,13 +33,12 @@
 
   @if (uIConfigurations && uIConfigurations.length > 0) {
     <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
+      <table class="table table-striped table-bordered" aria-describedby="page-heading" >
         <thead>
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
                 <span jhiTranslate="global.field.id">ID</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -52,7 +52,6 @@
             <th scope="col" jhiSortBy="logo">
               <div class="d-flex">
                 <span jhiTranslate="projectinternApp.uIConfiguration.logo">Logo</span>
-
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -87,26 +86,37 @@
                 <a [routerLink]="['/ui-configuration', uIConfiguration.id, 'view']">{{ uIConfiguration.id }}</a>
               </td>
               <td>{{ uIConfiguration.colorSchema }}</td>
-              <td>{{ uIConfiguration.logo }}</td>
-              <td>{{ uIConfiguration.banner }}</td>
+
+              <img
+                *ngIf="uIConfiguration.logo"
+                [src]="'/content/images/' + uIConfiguration.logo"
+                alt="Logo"
+                width="100"
+                height="50"
+                class="img-thumbnail"
+              />
+              <!-- Displaying the banner image -->
+              <td>
+                <img
+                  *ngIf="uIConfiguration.banner"
+                  [src]="'/content/images/' + uIConfiguration.banner"
+                  alt="Banner"
+                  width="100"
+                  height="50"
+                  class="img-thumbnail"
+                />
+              </td>
+
               <td>{{ uIConfiguration.dateCreation | formatMediumDatetime }}</td>
               <td>{{ uIConfiguration.dateModify | formatMediumDatetime }}</td>
               <td class="text-end">
                 <div class="btn-group">
-                  <a
-                    [routerLink]="['/ui-configuration', uIConfiguration.id, 'view']"
-                    class="btn btn-info btn-sm"
-                    data-cy="entityDetailsButton"
-                  >
+                  <a [routerLink]="['/ui-configuration', uIConfiguration.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                     <fa-icon icon="eye"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                   </a>
 
-                  <a
-                    [routerLink]="['/ui-configuration', uIConfiguration.id, 'edit']"
-                    class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton"
-                  >
+                  <a [routerLink]="['/ui-configuration', uIConfiguration.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                   </a>
@@ -120,6 +130,8 @@
             </tr>
           }
         </tbody>
+
+
       </table>
     </div>
   }

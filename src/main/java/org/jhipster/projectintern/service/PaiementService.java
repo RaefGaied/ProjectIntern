@@ -50,7 +50,7 @@ public class PaiementService {
 
         return PaymentIntent.create(params);
     }
-    public ResponseEntity<String> stripePayment(Long paiementId) throws Exception {
+    /*public ResponseEntity<String> stripePayment(Long paiementId) throws Exception {
         Optional<Paiement> paymentOpt = paiementRepository.findById(paiementId);
 
         if (!paymentOpt.isPresent()) {
@@ -84,7 +84,7 @@ public class PaiementService {
 
         // Return a successful response
         return ResponseEntity.ok("PaymentIntent created successfully with ID: " + paymentIntent.getId());
-    }
+    }*/
     /**
      * Save a paiement.
      *

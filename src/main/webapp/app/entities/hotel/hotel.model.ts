@@ -3,6 +3,9 @@ import { IEmailTemplateConfiguration } from 'app/entities/email-template-configu
 import { IAuthentificationConfiguration } from 'app/entities/authentification-configuration/authentification-configuration.model';
 import { IHotelAdministrateur } from 'app/entities/hotel-administrateur/hotel-administrateur.model';
 
+import {IPartenaire} from "../partenaire/partenaire.model";
+import {IReservation} from "../reservation/reservation.model";
+
 export interface IHotel {
   id: number;
   nom?: string | null;
@@ -14,10 +17,26 @@ export interface IHotel {
   capacite?: number | null;
   notation?: string | null;
   lienUnique?: string | null;
-  uiConfigurations?: Pick<IUIConfiguration, 'id'> | null;
+  services?: IService ;
+  uiConfigurations?: IUIConfiguration | null;
+  //uiConfigurations?:Pick<IUIConfiguration, 'id'> | null;
   emailConfig?: Pick<IEmailTemplateConfiguration, 'id'> | null;
   authConfig?: Pick<IAuthentificationConfiguration, 'id'> | null;
   hotelAdministrateur?: Pick<IHotelAdministrateur, 'id'> | null;
 }
+export interface IService {
+  id: number;
+  nom?: string | null;
+  description?: string | null;
+  prix?: number | null;
+  disponibilite?: string | null;
+  capacite?: number | null;
+  typeService?: string | null;
+  hotel?: IHotel | null;
+  partenaire?: Pick<IPartenaire, 'id'> | null;
+  reservation?: Pick<IReservation, 'id'> | null;
+
+}
+
 
 export type NewHotel = Omit<IHotel, 'id'> & { id: null };

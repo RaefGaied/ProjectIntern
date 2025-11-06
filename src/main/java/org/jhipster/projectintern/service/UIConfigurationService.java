@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,16 +55,11 @@ public class UIConfigurationService {
             if (uIConfigurationDTO.getColorSchema() == null || uIConfigurationDTO.getColorSchema().isEmpty()) {
                 throw new IllegalArgumentException("Hotel UIConfiguration ColorSchema cannot be empty");
             }
-            if (uIConfigurationDTO.getLogo() == null || uIConfigurationDTO.getLogo().isEmpty()){
+            if (uIConfigurationDTO.getLogo() == null || uIConfigurationDTO.getLogo().isEmpty()) {
                 throw new IllegalArgumentException("Hotel UIConfiguration Logo cannot be empty");
             }
 
-            Hotel hotel = hotelRepository.findById(uIConfigurationDTO.getHotel().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Hotel does not exist"));
-
             UIConfiguration uIConfiguration = uIConfigurationMapper.toEntity(uIConfigurationDTO);
-            uIConfiguration.setHotel(hotel); // Associate with hotel
-
             uIConfiguration = uIConfigurationRepository.save(uIConfiguration);
             return uIConfigurationMapper.toDto(uIConfiguration);
 
@@ -156,4 +153,7 @@ public class UIConfigurationService {
         log.debug("Request to delete UIConfiguration : {}", id);
         uIConfigurationRepository.deleteById(id);
     }
+
+
+
 }

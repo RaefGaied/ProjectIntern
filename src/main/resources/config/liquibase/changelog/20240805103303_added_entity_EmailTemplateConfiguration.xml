@@ -17,7 +17,7 @@
             <column name="nom_template" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="corps" type="varchar(255)">
+            <column name="corps" type="varchar(500)">
                 <constraints nullable="true" />
             </column>
             <column name="datede_creation" type="${datetimeType}">

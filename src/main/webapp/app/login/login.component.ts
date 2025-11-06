@@ -53,3 +53,62 @@ export default class LoginComponent implements OnInit, AfterViewInit {
     });
   }
 }
+/*import {Component, OnInit, AfterViewInit, ElementRef, inject, signal, viewChild, ViewChild} from '@angular/core';
+import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+
+import SharedModule from 'app/shared/shared.module';
+import { AuthServerProvider } from 'app/core/auth/auth-jwt.service'; // Updated to use AuthServerProvider
+import { AccountService } from 'app/core/auth/account.service';
+
+@Component({
+  standalone: true,
+  selector: 'jhi-login',
+  imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterModule],
+  templateUrl: './login.component.html',
+})
+export default class LoginComponent implements OnInit, AfterViewInit {
+  @ViewChild('username') username!: ElementRef;  // Correctly define viewChild
+
+  authenticationError = signal(false);
+
+  loginForm = new FormGroup({
+    username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    rememberMe: new FormControl(false, { nonNullable: true }), // Removed unnecessary validator
+  });
+
+  private accountService = inject(AccountService);
+  private authServerProvider = inject(AuthServerProvider); // Updated to use AuthServerProvider
+  private router = inject(Router);
+
+  ngOnInit(): void {
+    // If already authenticated, navigate to the home page
+    this.accountService.identity().subscribe(() => {
+      if (this.accountService.isAuthenticated()) {
+        this.router.navigate(['']);
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.username.nativeElement.focus();
+  }
+
+  login(): void {
+    const credentials = this.loginForm.getRawValue();
+    this.authServerProvider.login(credentials).subscribe({
+      next: () => {
+        this.authenticationError.set(false);
+        // Navigate to the home page or previously stored URL
+        this.router.navigate(['']);
+      },
+      error: () => {
+        this.authenticationError.set(true);
+        console.error('Login failed: Invalid credentials or server error.');
+      },
+    });
+  }
+
+}*/
+

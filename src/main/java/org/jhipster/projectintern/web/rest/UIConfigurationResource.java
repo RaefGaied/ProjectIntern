@@ -1,6 +1,7 @@
 package org.jhipster.projectintern.web.rest;
 
 import org.jhipster.projectintern.repository.UIConfigurationRepository;
+import org.jhipster.projectintern.service.HotelService;
 import org.jhipster.projectintern.service.UIConfigurationService;
 import org.jhipster.projectintern.service.dto.UIConfigurationDTO;
 import org.jhipster.projectintern.web.rest.errors.BadRequestAlertException;
@@ -29,7 +30,7 @@ import java.util.Optional;
  * REST controller for managing {@link org.jhipster.projectintern.domain.UIConfiguration}.
  */
 @RestController
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_HOTEL_ADMIN')")
 @RequestMapping("/api/ui-configurations")
 public class UIConfigurationResource {
 
@@ -43,10 +44,12 @@ public class UIConfigurationResource {
     private final UIConfigurationService uIConfigurationService;
 
     private final UIConfigurationRepository uIConfigurationRepository;
+    private final HotelService hotelService;
 
-    public UIConfigurationResource(UIConfigurationService uIConfigurationService, UIConfigurationRepository uIConfigurationRepository) {
+    public UIConfigurationResource(UIConfigurationService uIConfigurationService, UIConfigurationRepository uIConfigurationRepository, HotelService hotelService) {
         this.uIConfigurationService = uIConfigurationService;
         this.uIConfigurationRepository = uIConfigurationRepository;
+        this.hotelService = hotelService;
     }
 
     /**
@@ -195,4 +198,23 @@ public class UIConfigurationResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+
+   /* @GetMapping("/images/{id}")
+    public ResponseEntity<ByteArrayResource> getImage(@PathVariable Long id) {
+        byte[] imageData = hotelService.findImageById(id);
+
+        if (imageData == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Determine the image type based on the byte array or file extension stored in your entity.
+        String imageType = determineImageType(imageData); // Implement this method to detect the image type
+
+        return ResponseEntity.ok()
+            .contentType(MediaType.parseMediaType(imageType))
+            .body(new ByteArrayResource(imageData));
+    }*/
+
+
 }

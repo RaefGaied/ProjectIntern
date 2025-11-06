@@ -19,11 +19,12 @@
           </div>
         }
 
+        <!-- Color Schema as a Color Picker -->
         <div class="mb-3">
           <label class="form-label" for="field_colorSchema" jhiTranslate="projectinternApp.uIConfiguration.colorSchema">Color Schema</label>
           <input
-            type="text"
-            class="form-control"
+            type="color"
+            class="form-control form-control-color"
             name="colorSchema"
             id="field_colorSchema"
             data-cy="colorSchema"
@@ -33,17 +34,42 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_logo" jhiTranslate="projectinternApp.uIConfiguration.logo">Logo</label>
-          <input type="text" class="form-control" name="logo" id="field_logo" data-cy="logo" formControlName="logo" />
+          <input
+            type="file"
+            class="form-control"
+            name="logo"
+            id="field_logo"
+            data-cy="logo"
+            formControlName="logo"
+            accept="image/*"
+            (change)="onFileSelected($event, 'logo')"
+          />
+          <div *ngIf="logoPreviewUrl" class="mt-2">
+            <img [src]="logoPreviewUrl" alt="Logo Preview" width="150" />
+          </div>
         </div>
 
         <div class="mb-3">
           <label class="form-label" for="field_banner" jhiTranslate="projectinternApp.uIConfiguration.banner">Banner</label>
-          <input type="text" class="form-control" name="banner" id="field_banner" data-cy="banner" formControlName="banner" />
+          <input
+            type="file"
+            class="form-control"
+            name="banner"
+            id="field_banner"
+            data-cy="banner"
+            formControlName="banner"
+            accept="image/*"
+            (change)="onFileSelected($event, 'banner')"
+          />
+          <div *ngIf="bannerPreviewUrl" class="mt-2">
+            <img [src]="bannerPreviewUrl" alt="Banner Preview" width="150" />
+          </div>
         </div>
+
 
         <div class="mb-3">
           <label class="form-label" for="field_dateCreation" jhiTranslate="projectinternApp.uIConfiguration.dateCreation"
-            >Date Creation</label
+          >Date Creation</label
           >
           <div class="d-flex">
             <input

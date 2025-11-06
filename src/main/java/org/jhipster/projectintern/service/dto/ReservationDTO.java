@@ -15,6 +15,8 @@ public class ReservationDTO implements Serializable {
 
     private ZonedDateTime dateDebut;
 
+    private String roomType;
+
     private ZonedDateTime dateFin;
 
     private Integer nombrePersonnes;
@@ -89,6 +91,13 @@ public class ReservationDTO implements Serializable {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+    public String getRoomType() { // Add getter for roomType
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
     @Override

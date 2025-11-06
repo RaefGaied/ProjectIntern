@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmation de réservation au Mövenpick Resort & Marine Spa Sousse</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .email-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333;
+      font-size: 24px;
+      text-align: center;
+    }
+    p {
+      color: #555;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    ul li {
+      padding: 5px 0;
+      font-size: 16px;
+    }
+    .button {
+      display: block;
+      width: 100%;
+      max-width: 200px;
+      margin: 20px auto;
+      text-align: center;
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .button:hover {
+      background-color: #0056b3;
+    }
+    .secondary-button {
+      background-color: #28A745;
+    }
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="email-container">
+  <h1>Confirmation de réservation</h1>
+
+  <p>Bonjour <span th:text="${user.firstName}">[Nom de l'utilisateur]</span>,</p>
+
+  <p>Nous avons le plaisir de vous informer que votre réservation au Mövenpick Resort & Marine Spa Sousse est confirmée. Nous sommes ravis de vous accueillir très bientôt.</p>
+
+  <p><strong>Détails de la réservation :</strong></p>
+  <ul>
+    <li><strong>Type de chambre :</strong> <span>Deluxe Suite</span></li>
+    <li><strong>Date d'arrivée :</strong> <span th:text="${checkInDate}">[Date d'arrivée]</span></li>
+    <li><strong>Date de départ :</strong> <span th:text="${checkOutDate}">[Date de départ]</span></li>
+    <li><strong>Prix total :</strong> <span th:text="${totalPrice}">[Prix total]</span></li>
+  </ul>
+
+  <p>Pour finaliser votre réservation, veuillez procéder au paiement en cliquant sur le bouton ci-dessous :</p>
+
+  <a th:href="${paymentLink}" class="button">Procéder au paiement</a>
+
+  <p>Si vous souhaitez modifier votre réservation, vous pouvez le faire en cliquant sur le bouton ci-dessous :</p>
+
+  <a th:href="${modifyReservationLink}" class="button secondary-button">Modifier la réservation</a>
+
+  <p>Nous avons hâte de vous accueillir !</p>
+
+  <p class="footer">Cordialement,<br>L'équipe de l'hôtel</p>
+</div>
+</body>
+</html>

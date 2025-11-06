@@ -14,7 +14,10 @@ import { IHotel } from '../hotel.model';
 export class HotelDetailComponent {
   hotel = input<IHotel | null>(null);
 
+
   previousState(): void {
     window.history.back();
   }
+
+
 }

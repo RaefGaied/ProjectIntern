@@ -1,16 +1,20 @@
 package org.jhipster.projectintern.web.rest;
 
+import org.jhipster.projectintern.domain.Hotel;
 import org.jhipster.projectintern.repository.HotelRepository;
 import org.jhipster.projectintern.service.HotelService;
+import org.jhipster.projectintern.service.MailService;
 import org.jhipster.projectintern.service.dto.HotelDTO;
 import org.jhipster.projectintern.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +25,6 @@ import tech.jhipster.web.util.ResponseUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -30,13 +33,14 @@ import java.util.Optional;
  * REST controller for managing {@link org.jhipster.projectintern.domain.Hotel}.
  */
 @RestController
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_HOTEL_ADMIN')")
 @RequestMapping("/api/hotels")
 public class HotelResource {
 
     private static final Logger log = LoggerFactory.getLogger(HotelResource.class);
 
     private static final String ENTITY_NAME = "hotel";
+    private final MailService mailService;
 
     private String uniqueLink;
 
@@ -47,7 +51,8 @@ public class HotelResource {
 
     private final HotelRepository hotelRepository;
 
-    public HotelResource(HotelService hotelService, HotelRepository hotelRepository) {
+    public HotelResource(MailService mailService, HotelService hotelService, HotelRepository hotelRepository) {
+        this.mailService = mailService;
         this.hotelService = hotelService;
         this.hotelRepository = hotelRepository;
     }
@@ -92,6 +97,7 @@ public class HotelResource {
      * or with status {@code 500 (Internal Server Error)} if the hotelDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+
     @PutMapping("/{id}")
     public ResponseEntity<HotelDTO> updateHotel(
         @PathVariable(value = "id", required = false) final Long id,
@@ -126,6 +132,7 @@ public class HotelResource {
      * or with status {@code 500 (Internal Server Error)} if the hotelDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<HotelDTO> partialUpdateHotel(
         @PathVariable(value = "id", required = false) final Long id,
@@ -171,6 +178,7 @@ public class HotelResource {
      * @param id the id of the hotelDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the hotelDTO, or with status {@code 404 (Not Found)}.
      */
+
     @GetMapping("/{id}")
     public ResponseEntity<HotelDTO> getHotel(@PathVariable("id") Long id) {
         log.debug("REST request to get Hotel : {}", id);
@@ -184,7 +192,9 @@ public class HotelResource {
      * @param id the id of the hotelDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+
     @DeleteMapping("/{id}")
+
     public ResponseEntity<Void> deleteHotel(@PathVariable("id") Long id) {
         log.debug("REST request to delete Hotel : {}", id);
         hotelService.delete(id);
@@ -196,13 +206,89 @@ public class HotelResource {
     @GetMapping("/hotel/{id}")
     public ResponseEntity<String> getHotelByLink(
         @PathVariable("id") Long id) {
+        // Example check for a valid ID (assuming IDs must be greater than 0)
+        if (id <= 0) {
+            return ResponseEntity.badRequest().body("Invalid ID");
+        }
 
-        // Here you can implement logic to verify the UUID and return the hotel details or link
-        // For now, let's assume you're simply returning the full link with the UUID
+        // Generate the link
         String link = "http://localhost:8080/api/hotels/" + id;
 
         return ResponseEntity.ok(link);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<HotelDTO>> searchHotels(
+        @RequestParam String location,
+        @RequestParam String checkInDate,
+        @RequestParam String checkOutDate,
+        @RequestParam int adults,
+        @RequestParam int children,
+        @RequestParam int rooms
+    ) {
+        log.debug("REST request to search for Hotels in location: {}, check-in: {}, check-out: {}, adults: {}, children: {}, rooms: {}",
+            location, checkInDate, checkOutDate, adults, children, rooms);
+
+        List<HotelDTO> hotels = hotelService.searchHotels(location, checkInDate, checkOutDate, adults, children, rooms);
+        return ResponseEntity.ok().body(hotels);
+    }
+    private String determineImageType(byte[] imageData) {
+        if (imageData == null || imageData.length < 4) {
+            return MediaType.APPLICATION_OCTET_STREAM_VALUE; // Default to binary if the type is unknown
+        }
+
+        // Simple signature checks for common image types
+        if (imageData[0] == (byte) 0xFF && imageData[1] == (byte) 0xD8) {
+            return MediaType.IMAGE_JPEG_VALUE;
+        } else if (imageData[0] == (byte) 0x89 && imageData[1] == (byte) 0x50) {
+            return MediaType.IMAGE_PNG_VALUE;
+        } else if (imageData[0] == (byte) 0x47 && imageData[1] == (byte) 0x49) {
+            return MediaType.IMAGE_GIF_VALUE;
+        }
+        // Add more types if needed
+
+        return MediaType.APPLICATION_OCTET_STREAM_VALUE; // Default if type is unknown
+    }
+
+
+   /* @GetMapping("/images/{id}")
+    public ResponseEntity<ByteArrayResource> getImage(@PathVariable Long id) {
+        log.debug("Fetching image with ID: {}", id);
+
+        // Fetch image data from the repository (modify to your actual structure)
+        byte[] imageData = hotelService.findImageById(id);  // Fetch from correct service
+
+
+        if (imageData == null) {
+            log.error("Image not found for ID: {}", id);  // Log error
+            return ResponseEntity.notFound().build();  // Return 404
+        }
+
+        // If image is found, determine its type
+        String imageType = determineImageType(imageData);
+        log.debug("Image found, type: {}", imageType);
+
+        return ResponseEntity.ok()
+            .contentType(MediaType.parseMediaType(imageType))  // Return correct image type
+            .body(new ByteArrayResource(imageData));  // Return image data
+    }*/
+   @PostMapping("/send-test-email")
+   public String sendTestEmail() {
+       mailService.sendSimpleMessage("raefgaied@gmail.com", "Email Testing from SpringBoot","this is a test email");
+
+       return "Email Testing Successfully Sent";
+   }
+    @GetMapping("/{id}/with-services")
+    public ResponseEntity<Hotel> getHotelWithServices(@PathVariable Long id) {
+        Optional<Hotel> hotel = hotelRepository.findOneWithServices(id);
+        return hotel.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+
+
+
 
 }
+
+

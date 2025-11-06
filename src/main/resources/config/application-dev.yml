@@ -41,15 +41,20 @@ spring:
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
-  mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+  #mail:
+   # host: localhost
+    #port: 25
+    #username:
+    #password:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
-    cache: false
+      cache: false
+      prefix: classpath:/templates/
+      suffix: .html
+      encoding: UTF-8
+      mode: HTML
+      checkTemplateLocation: true
 
 server:
   port: 8080
@@ -84,14 +89,6 @@ jhipster:
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
-  #mail: # specific JHipster mail property, for standard properties see MailProperties
-   #     host: sandbox.smtp.mailtrap.io
-    #    port: 587
-     #   user: 4b97024db0b5df
-      #  password: 87da181f72a65f
-       # tls: true
-        #auth: true
-
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration

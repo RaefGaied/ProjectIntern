@@ -2,6 +2,7 @@ package org.jhipster.projectintern.service;
 
 import org.jhipster.projectintern.domain.EmailTemplateConfiguration;
 import org.jhipster.projectintern.domain.Hotel;
+import org.jhipster.projectintern.domain.Partenaire;
 import org.jhipster.projectintern.repository.EmailTemplateConfigurationRepository;
 import org.jhipster.projectintern.repository.HotelAdministrateurRepository;
 import org.jhipster.projectintern.repository.HotelRepository;
@@ -69,21 +70,12 @@ public class EmailTemplateConfigurationService {
             if (emailTemplateConfigurationDTO.getNomTemplate() == null || emailTemplateConfigurationDTO.getNomTemplate().isEmpty()) {
                 throw new IllegalArgumentException("EmailTemplate Name cannot be empty");
             }
-
             if (emailTemplateConfigurationDTO.getCorps() == null || emailTemplateConfigurationDTO.getCorps().isEmpty()) {
                 throw new IllegalArgumentException("EmailTemplate Corps cannot be empty");
             }
 
-            if (emailTemplateConfigurationDTO.getActiveStatus() == null) {
-                throw new IllegalArgumentException("EmailTemplate Active Status cannot be empty");
-            }
-
-            Hotel hotel = hotelRepository.findById(emailTemplateConfigurationDTO.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Hotel does not exist"));
 
             EmailTemplateConfiguration emailTemplateConfiguration = emailTemplateConfigurationMapper.toEntity(emailTemplateConfigurationDTO);
-            emailTemplateConfiguration.setHotel(hotel); // Associate with hotel
-
             emailTemplateConfiguration = emailTemplateConfigurationRepository.save(emailTemplateConfiguration);
             return emailTemplateConfigurationMapper.toDto(emailTemplateConfiguration);
 

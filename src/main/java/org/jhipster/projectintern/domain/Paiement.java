@@ -52,7 +52,7 @@ public class Paiement implements Serializable {
     @JoinColumn(unique = true)
     private Reservation reservation;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+
 
     public Long getId() {
         return this.id;

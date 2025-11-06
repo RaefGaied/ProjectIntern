@@ -1,5 +1,8 @@
 package org.jhipster.projectintern.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.jhipster.projectintern.domain.User;
@@ -7,10 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import tech.jhipster.config.JHipsterProperties;
@@ -24,6 +25,7 @@ import java.util.Locale;
  * We use the {@link Async} annotation to send emails asynchronously.
  */
 @Service
+
 public class MailService {
 
     private static final Logger log = LoggerFactory.getLogger(MailService.class);
@@ -39,6 +41,7 @@ public class MailService {
     private final MessageSource messageSource;
 
     private final SpringTemplateEngine templateEngine;
+     ;
 
     public MailService(
         JHipsterProperties jHipsterProperties,
@@ -99,8 +102,29 @@ public class MailService {
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
-        this.sendEmailSync(user.getEmail(), subject, content, false, true);
+        this.sendSimpleMessage(user.getEmail(), subject, content);
     }
+
+    @Async
+    public void sendHotelUniqueLinkEmail(User hotelAdministrateur, String lienUnique) {
+        log.debug("Sending unique link email to '{}'", hotelAdministrateur.getEmail());
+
+        if (hotelAdministrateur.getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", hotelAdministrateur.getLogin());
+            return;
+        }
+
+        Locale locale = Locale.forLanguageTag(hotelAdministrateur.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, hotelAdministrateur);
+        context.setVariable("lienUnique", lienUnique);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("mail/hotelUniqueLinkEmail", context);
+        String subject = messageSource.getMessage("email.hotel.uniqueLink.title", null, locale);
+
+        this.sendSimpleMessage(hotelAdministrateur.getEmail(), subject, content);
+    }
+
 
     @Async
     public void sendActivationEmail(User user) {
@@ -119,4 +143,62 @@ public class MailService {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         this.sendEmailFromTemplateSync(user, "mail/passwordResetEmail", "email.reset.title");
     }
+
+    public void sendSimpleMessage(String to, String subject, String text) {
+        try {
+            String cleanTo = to.trim();
+
+            if (!isValidEmail(cleanTo)) {
+                throw new IllegalArgumentException("Invalid email address: " + cleanTo);
+            }
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
+
+            helper.setTo(cleanTo);
+            helper.setSubject(subject);
+            helper.setText(text, true);
+            message.setFrom("WanderLux@Booking.com");
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // Handle invalid email format case
+            e.printStackTrace();
+        }
+    }
+
+    // Optional: Method to validate email format
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$|^[\\w-\\.]+@(yahoo|localhost)$";
+        return email.matches(emailRegex);
+    }
+
+    public void sendReservationEmail(User user, String hotelName, String roomType, String checkInDate, String checkOutDate, String totalPrice) {
+        Context context = new Context(Locale.getDefault());
+        context.setVariable("user", user);
+        context.setVariable("hotelName", hotelName);
+        context.setVariable("roomType", roomType);
+        context.setVariable("checkInDate", checkInDate);
+        context.setVariable("checkOutDate", checkOutDate);
+        context.setVariable("totalPrice", totalPrice);
+
+        String content = templateEngine.process("mail/reservationEmail", context);
+        String subject = "Reservation Confirmation";
+
+        this.sendSimpleMessage(user.getEmail(), subject, content);
+    }
+
+/*public void SendEmailAsync(String to, String subject, String content) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setFrom("example@example.com");
+        message.setSubject(subject);
+        message.setText(content);
+
+        mailSender.send(message);
+    }*/
+
+
 }

@@ -12,6 +12,8 @@ import org.jhipster.projectintern.service.dto.HotelDTO;
 import org.jhipster.projectintern.service.dto.UIConfigurationDTO;
 import org.mapstruct.*;
 
+import java.time.ZonedDateTime;
+
 /**
  * Mapper for the entity {@link Hotel} and its DTO {@link HotelDTO}.
  */
@@ -27,22 +29,36 @@ public interface HotelMapper extends EntityMapper<HotelDTO, Hotel> {
     @Named("uIConfigurationId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "colorSchema", source = "colorSchema")
+    @Mapping(target = "logo", source = "logo")
+    @Mapping(target = "banner", source = "banner")
+    @Mapping(target = "dateCreation", source = "dateCreation")
+    @Mapping(target = "dateModify", source = "dateModify")
     UIConfigurationDTO toDtoUIConfigurationId(UIConfiguration uIConfiguration);
 
     @Named("emailTemplateConfigurationId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nomTemplate", source = "nomTemplate")
+    @Mapping(target = "corps", source = "corps")
+    @Mapping(target = "datedeCreation", source = "datedeCreation")
+    @Mapping(target = "datedeModification", source = "datedeModification")
+    @Mapping(target = "activeStatus", source = "activeStatus")
     EmailTemplateConfigurationDTO toDtoEmailTemplateConfigurationId(EmailTemplateConfiguration emailTemplateConfiguration);
 
     @Named("authentificationConfigurationId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "twoFactorEnabled", source = "twoFactorEnabled")
+    @Mapping(target = "loginPageCustomization", source = "loginPageCustomization")
     AuthentificationConfigurationDTO toDtoAuthentificationConfigurationId(AuthentificationConfiguration authentificationConfiguration);
 
     @Named("hotelAdministrateurId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-
+    @Mapping(target = "nom", source = "nom")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "motDePasse", source = "motDePasse")
     HotelAdministrateurDTO toDtoHotelAdministrateurId(HotelAdministrateur hotelAdministrateur);
 
     @Named("hotelAdministrateurNom")
